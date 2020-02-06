@@ -1,5 +1,8 @@
 package nino.wordutor.util;
 
+/**
+ * snowflake id生成
+ */
 public class IdWorker{
 
     //下面两个每个5位，加起来就是10位的工作机器id

@@ -144,6 +144,10 @@ public class VocabularyVM {
         }
     }
 
+    /**
+     * 录入时先匹配是否已经有相同的单词，如果有则渲染后update
+     * @param text
+     */
     @Command
     @NotifyChange(value = {"chineseTranslationVOList", "exampleSentenceList", "vocabulary"})
     public void match(@BindingParam("text") String text) {

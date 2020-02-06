@@ -28,7 +28,9 @@ public class ReciteVM {
 
     List<ChineseTranslationVO> chineseTranslationVOList;
 
+    //默认显示30个候选词
     int lines = 30;
+    //候选词默认选取方式是根据创建时间
     String candidateType = "TIME";
 
     @AfterCompose
@@ -44,6 +46,9 @@ public class ReciteVM {
         next();
     }
 
+    /**
+     * 显示下一个单词
+     */
     public void next(){
         if (candidateList.size() > 0) {
             vocabulary = candidateList.getFirst();
@@ -61,25 +66,39 @@ public class ReciteVM {
         chineseTranslationVOList = converter.convertToVO(vocabulary);
     }
 
+    /**
+     * 记得单词
+     */
     @Command
     @NotifyChange(value = {"vocabulary", "candidateList"})
     public void know() {
         next();
     }
 
+    /**
+     * 不记得单词。把词重新放到队尾，并且记忆等级+1
+     */
     @Command
     @NotifyChange(value = {"vocabulary", "candidateList"})
     public void forget() {
+        vocabularyService.plusMemoryLevel(vocabulary);
         candidateList.addLast(vocabulary);
         next();
     }
 
+    /**
+     * 增加记忆等级
+     */
     @Command
     @NotifyChange(value = {"vocabulary"})
     public void plusMemoryLevel(){
         vocabularyService.plusMemoryLevel(vocabulary);
     }
 
+    /**
+     * 选择候选词选择类型
+     * @param candidateType
+     */
     @Command
     @NotifyChange(value = {"candidateList", "candidateType", "vocabulary"})
     public void selectCandidateType(@BindingParam("type") String candidateType) {
@@ -87,6 +106,10 @@ public class ReciteVM {
         init();
     }
 
+    /**
+     * 更改候选词数量
+     * @param lines
+     */
     @Command
     @NotifyChange(value = {"candidateList", "lines", "vocabulary"})
     public void selectCandidateLines(@BindingParam("lines") int lines) {

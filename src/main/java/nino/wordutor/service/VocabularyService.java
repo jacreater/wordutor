@@ -99,6 +99,10 @@ public class VocabularyService {
         return vocabularyDAO.findAllSortByMemoryLevel(lines);
     }
 
+    /**
+     * 记忆等级+1
+     * @param vocabulary
+     */
     public void plusMemoryLevel(Vocabulary vocabulary) {
         int memoryLevel = null == vocabulary.getMemoryLevel() ? 0 : vocabulary.getMemoryLevel();
         memoryLevel++;

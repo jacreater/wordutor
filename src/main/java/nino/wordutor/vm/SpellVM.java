@@ -31,6 +31,10 @@ public class SpellVM extends ReciteVM{
     }
 
 
+    /**
+     * 校验单词拼写是否正确
+     * @param english
+     */
     @Command
     public void check(@BindingParam("english") String english) {
         if (english.trim().length() > 0) {

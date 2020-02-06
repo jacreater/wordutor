@@ -24,7 +24,6 @@ public class VocabularyDAO {
 
     public void insert(Vocabulary vocabulary) {
         mongoTemplate.insert(vocabulary);
-//        System.out.println(vocabulary.toString());
     }
 
 

@@ -9,8 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 public class ChineseTranslationConverter {
 
+    /**
+     * 类转换
+     * @param vocabulary
+     * @return
+     */
     public List<ChineseTranslationVO> convertToVO(Vocabulary vocabulary) {
         List<ChineseTranslation> chineseTranslationList = vocabulary.getChineseTranslation();
         Map<String, List<ChineseTranslation>> translationMap = chineseTranslationList.stream().collect(Collectors.groupingBy(ChineseTranslation::getProperty));
