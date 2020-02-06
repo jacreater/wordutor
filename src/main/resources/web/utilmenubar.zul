@@ -1,0 +1,29 @@
+<zk>
+    <menubar hflex="1">
+        <menuitem iconSclass="z-icon-plus-circle" label="@load(vm.vocabulary.memoryLevel)" style="font-size: 20px;"
+                  tooltiptext="强化记忆" onClick="@command('plusMemoryLevel')"/>
+        <menuitem iconSclass="z-icon-list" style="font-size: 20px;float:right" />
+        <menuitem iconSclass="z-icon-minus" style="font-size: 20px;float:right"/>
+        <menu iconSclass="z-icon-cog" style="font-size: 20px;float:right">
+            <menupopup>
+                <menuitem checkmark="true" autocheck="true" label="选择最后录入的" value="TIME"
+                          checked="@load(vm.candidateType eq self.value)" onCheck="@command('selectCandidateType', type=self.value)"/>
+                <menuitem checkmark="true" autocheck="true" label="选择记忆等级高的" value="LEVEL"
+                          checked="@load(vm.candidateType eq self.value)" onCheck="@command('selectCandidateType', type=self.value)"/>
+                <menuseparator />
+                <menuitem checkmark="true" autocheck="true" label="10" checked="@load(vm.lines eq self.label)"
+                          onCheck="@command('selectCandidateLines', lines=self.label)"/>
+                <menuitem checkmark="true" autocheck="true" label="20" checked="@load(vm.lines eq self.label)"
+                          onCheck="@command('selectCandidateLines', lines=self.label)"/>
+                <menuitem checkmark="true" autocheck="true" label="30" checked="@load(vm.lines eq self.label)"
+                          onCheck="@command('selectCandidateLines', lines=self.label)"/>
+                <menuitem checkmark="true" autocheck="true" label="50" checked="@load(vm.lines eq self.label)"
+                          onCheck="@command('selectCandidateLines', lines=self.label)"/>
+                <menuitem checkmark="true" autocheck="true" label="80" checked="@load(vm.lines eq self.label)"
+                          onCheck="@command('selectCandidateLines', lines=self.label)"/>
+                <menuitem checkmark="true" autocheck="true" label="全部" checked="@load(vm.lines eq self.value)"
+                          onCheck="@command('selectCandidateLines', lines=99999)"/>
+            </menupopup>
+        </menu>
+    </menubar>
+</zk>

@@ -1,0 +1,20 @@
+<zk>
+    <style>
+        .selected {
+        border-radius:0px;
+        border:none;
+        border-bottom: 2px solid #0093F9 ;
+        }
+    </style>
+    <zscript><![CDATA[
+        import javax.servlet.http.HttpServletRequest;
+
+        HttpServletRequest request = ((HttpServletRequest) Executions.getCurrent().getNativeRequest());
+        String url = request.getPathInfo();
+    ]]></zscript>
+    <menubar vflex="1" orient="vertical">
+        <menuitem label="录" href="/input" sclass="${url == '/web/input.zul' ? 'selected' : ''}"/>
+        <menuitem label="背" href="/recite" sclass="${url == '/web/recite.zul' ? 'selected' : ''}"/>
+        <menuitem label="拼" href="/spell" sclass="${url == '/web/spell.zul' ? 'selected' : ''}"/>
+    </menubar>
+</zk>

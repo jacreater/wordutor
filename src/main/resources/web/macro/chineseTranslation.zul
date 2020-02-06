@@ -1,0 +1,12 @@
+
+<hlayout valign="middle" hflex="1®">
+    <listbox id="property_lb" mold="select" hflex="1" height="32px">
+        <listitem label="n" selected="true"/>
+        <listitem label="adj" />
+        <listitem label="vi" />
+        <listitem label="vt" />
+        <listitem label="prop"/>
+    </listbox>
+    <space></space>
+    <textbox id="text_tb" hflex="10" />
+</hlayout>
