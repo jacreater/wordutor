@@ -2,8 +2,8 @@
     <menubar hflex="1">
         <menuitem iconSclass="z-icon-plus-circle" label="@load(vm.vocabulary.memoryLevel)" style="font-size: 20px;"
                   tooltiptext="强化记忆" onClick="@command('plusMemoryLevel')"/>
-        <menuitem iconSclass="z-icon-list" style="font-size: 20px;float:right" />
-        <menuitem iconSclass="z-icon-minus" style="font-size: 20px;float:right"/>
+<!--        <menuitem iconSclass="z-icon-list" style="font-size: 20px;float:right" />
+        <menuitem iconSclass="z-icon-minus" style="font-size: 20px;float:right"/>-->
         <menu iconSclass="z-icon-cog" style="font-size: 20px;float:right">
             <menupopup>
                 <menuitem checkmark="true" autocheck="true" label="选择最后录入的" value="TIME"

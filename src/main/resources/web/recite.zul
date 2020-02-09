@@ -1,4 +1,5 @@
 <zk>
+    <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
     <style>
         .badge {
         display: inline-block;
@@ -22,13 +23,13 @@
             <include src="~./nav.zul" />
 
             <vbox hflex="1">
-                <tabbox mold="accordion" hflex="1">
+                <tabbox mold="accordion" hflex="1" id="vocabularyTabbox">
                     <tabs>
                         <tab>词</tab>
                         <tab onClick="@command('prepareTranslation', vocabulary=vm.vocabulary)">查看翻译</tab>
                     </tabs>
                     <tabpanels>
-                        <tabpanel  height="350px">
+                        <tabpanel height="350px">
                             <listbox visible="false" model="@load(vm.candidateList)">
                                 <auxhead>
                                     <auxheader>
@@ -44,6 +45,7 @@
                             <div hflex="1">
                                 <include src="~./utilmenubar.zul" />
                                 <vlayout hflex="1">
+                                    <label value="@load(c:length(vm.candidateList))" />
                                     <label style="font-size: 4em" value="@load(vm.vocabulary.english)" />
                                     <label style="font-size: 3em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
                                 </vlayout>
@@ -52,6 +54,7 @@
 
                         <tabpanel>
                             <hlayout valign="middle" >
+
                                 <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
                                 <space />
                                 <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
@@ -71,7 +74,8 @@
                                     </template>
                                 </rows>
                             </grid>
-                            <grid model="@bind(vm.vocabulary.exampleSentences)">
+                            <grid model="@bind(vm.vocabulary.exampleSentences)" visible="@load(not empty vm.vocabulary.exampleSentences)"
+                                  emptyMessage="没有例句">
                                 <auxhead>
                                     <auxheader>例句</auxheader>
                                 </auxhead>

@@ -46,7 +46,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zuti</artifactId>
+            <version>8.6.0.1-Eval</version>
+        </dependency>
         <dependency>
             <groupId>org.zkoss.zkspringboot</groupId>
             <artifactId>zkspringboot-starter</artifactId>

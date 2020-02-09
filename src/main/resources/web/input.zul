@@ -1,18 +1,18 @@
 <zk>
     <window style=" padding:0px" width="100%" apply="org.zkoss.bind.BindComposer"
             viewModel="@id('vm') @init('nino.wordutor.vm.VocabularyVM')">
-        <caption style="text-align: right;margin-top:10px;" label="WORDUTOR(录)">
-            <bandbox id="englishSearchBandbox" buttonVisible="true" width="300px" style="margin-left:20px; margin-right:15px;"
+        <caption style="text-align: right;margin-top:10px;width:100%" label="WORDUTOR(录)">
+            <bandbox id="englishSearchBandbox" buttonVisible="true" width="50%" style="margin-left:1em; margin-right:1em;"
                      onOK="@command('search', text=self.text)" >
                 <bandpopup>
                     <listbox visible="@load(not empty vm.searchByEnglishCandidateList)" model="@load(vm.searchByEnglishCandidateList)"
-                             width="300px" onSelect="@command('match', text=self.selectedItem.label)">
+                             width="18em" onSelect="@command('match', text=self.selectedItem.label)">
                         <template name="model">
                             <listitem label="@load(each.english)" />
                         </template>
                     </listbox>
                     <listbox visible="@load(not empty vm.searchByChineseCandidateList)" model="@load(vm.searchByChineseCandidateList)"
-                             width="400px" onSelect="@command('match', text=self.selectedItem.value)">
+                             width="25em" onSelect="@command('match', text=self.selectedItem.value)">
                         <listhead>
                             <listheader hflex="7"/>
                             <listheader hflex="3"/>
@@ -31,9 +31,9 @@
             <include src="~./nav.zul" />
             <vbox>
                 <div hflex="1">
-                    英文:<textbox width="20em" style="margin-right:5em; margin-left:5px" placeholder="输入单词或词组" onChange="@command('match', text=self.text)"
+                    英文:<textbox width="30%" style="margin-right:5em; margin-left:5px" placeholder="输入单词或词组" onChange="@command('match', text=self.text)"
                                value="@bind(vm.vocabulary.english)" constraint="no empty"/>
-                    音标:<textbox width="20em" style="margin-left:5px" value="@bind(vm.vocabulary.phonetic)"/>
+                    音标:<textbox width="30%" style="margin-left:5px" value="@bind(vm.vocabulary.phonetic)"/>
 
                     <div style="float:right" visible="@load(not empty vm.vocabulary.createTime)">
                         创建时间: <label style="font-style:italic; color: grey" value="@load(vm.vocabulary.createTime)"/>

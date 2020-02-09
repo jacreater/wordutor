@@ -9,8 +9,12 @@ import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Notification;
+import org.zkoss.zul.Tab;
+import org.zkoss.zul.Tabbox;
+import org.zkoss.zul.Tabpanel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,14 +37,18 @@ public class ReciteVM {
     //候选词默认选取方式是根据创建时间
     String candidateType = "TIME";
 
+    @Wire
+    Tabbox vocabularyTabbox;
+
     @AfterCompose
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
         Selectors.wireEventListeners(view, this);
         Selectors.wireVariables(view, this, null);
+        init();
     }
 
-    @Init
+
     public void init(){
         candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines));
         next();
@@ -53,6 +61,8 @@ public class ReciteVM {
         if (candidateList.size() > 0) {
             vocabulary = candidateList.getFirst();
             candidateList.removeFirst();
+            vocabularyTabbox.setSelectedIndex(0);
+            vocabularyTabbox.invalidate();
         }
         else {
             Notification.show("已经是最后一个单词了");

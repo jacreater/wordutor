@@ -159,7 +159,11 @@ public class VocabularyVM {
 
     public void fill(Vocabulary vocabulary) {
         this.vocabulary = vocabulary;
-        exampleSentenceList = vocabulary.getExampleSentences();
+        if(null != vocabulary.getExampleSentences())
+            exampleSentenceList = vocabulary.getExampleSentences();
+        else
+            exampleSentenceList = new ArrayList<>();
+
         ChineseTranslationConverter converter = new ChineseTranslationConverter();
         chineseTranslationVOList = converter.convertToVO(vocabulary);
     }

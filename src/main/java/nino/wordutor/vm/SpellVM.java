@@ -22,13 +22,9 @@ public class SpellVM extends ReciteVM{
         Selectors.wireComponents(view, this, false);
         Selectors.wireEventListeners(view, this);
         Selectors.wireVariables(view, this, null);
+        init();
     }
 
-    @Init
-    public void init(){
-        candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines));
-        next();
-    }
 
 
     /**
