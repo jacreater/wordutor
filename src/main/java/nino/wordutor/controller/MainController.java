@@ -36,5 +36,14 @@ public class MainController {
         return "spell";
     }
 
+    /**
+     *  列出全部
+     * @return
+     */
+    @GetMapping("/list")
+    public String list() {
+        return "list";
+    }
+
 
 }

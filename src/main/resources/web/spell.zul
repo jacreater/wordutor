@@ -109,16 +109,14 @@
                                 </rows>
                             </grid>
                         </tabpanel>
-
                     </tabpanels>
                 </tabbox>
                 <hlayout style="margin-top:1em">
-                    <button label="记得" hflex="1" style="font-size: 1em;" onClick="@command('know')"/>
-                    <button label="不记得" hflex="1" style="font-size: 1em;"  onClick="@command('forget')"/>
+                    <button label="记得" hflex="1" style="font-size: 1em;" onClick="@command('know')" id="nextBtn"/>
+                    <button label="不记得" hflex="1" style="font-size: 1em;"  onClick="@command('forget')" id="forgetBtn"/>
                 </hlayout>
             </vbox>
         </hbox>
-
     </window>
 
 </zk>

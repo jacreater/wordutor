@@ -16,5 +16,6 @@
         <menuitem label="录" href="/input" sclass="${url == '/web/input.zul' ? 'selected' : ''}"/>
         <menuitem label="背" href="/recite" sclass="${url == '/web/recite.zul' ? 'selected' : ''}"/>
         <menuitem label="拼" href="/spell" sclass="${url == '/web/spell.zul' ? 'selected' : ''}"/>
+        <menuitem label="列" href="/list" sclass="${url == '/web/list.zul' ? 'selected' : ''}"/>
     </menubar>
 </zk>

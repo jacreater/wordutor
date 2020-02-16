@@ -1,0 +1,43 @@
+<zk>
+    <tabpanel>
+        <hlayout valign="middle" >
+            <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
+            <space />
+            <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+        </hlayout>
+        <separator />
+        <grid model="@bind(vm.chineseTranslationVOList)">
+            <columns>
+                <column width="5%"></column>
+                <column></column>
+            </columns>
+            <rows>
+                <template name="model">
+                    <row>
+                        <label value="@load(each.property)"/>
+                        <label hflex="1" value="@bind(each.text)" />
+                    </row>
+                </template>
+            </rows>
+        </grid>
+        <grid model="@bind(vm.vocabulary.exampleSentences)" visible="@load(not empty vm.vocabulary.exampleSentences)"
+              emptyMessage="没有例句">
+            <auxhead>
+                <auxheader>例句</auxheader>
+            </auxhead>
+            <columns>
+                <column />
+            </columns>
+            <rows>
+                <template name="model">
+                    <row>
+                        <vlayout>
+                            <label hflex="1" value="@load(each.sentence)"/>
+                            <label hflex="1" value="@load(each.translation)"/>
+                        </vlayout>
+                    </row>
+                </template>
+            </rows>
+        </grid>
+    </tabpanel>
+</zk>

@@ -1,0 +1,86 @@
+<zk>
+    <window style="padding:0px" width="100%" apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('nino.wordutor.vm.ListVM')">
+        <caption style="text-align: right;margin-top:10px;width:100%" label="WORDUTOR(列)">
+        </caption>
+
+        <hbox spacing="0" style="margin-top:-5px">
+            <include src="~./nav.zul" />
+            <grid model="@load(vm.vocabularyList)" mold="paging" >
+                <auxhead>
+                    <auxheader>
+                        <textbox hflex="1" onOK="@command('search')" id="englishSearchTextbox"/>
+                    </auxheader>
+                    <auxheader />
+                    <auxheader>
+                        <bandbox buttonVisible="true" id="dateRangeBandbox">
+                            <bandpopup width="390px">
+                                <hlayout valign="middle">
+                                    <datebox buttonVisible="true" cols="6" showTodayLink="true" id="startDatebox" onChange="@command('searchByDateRange')"/>
+                                    to
+                                    <datebox buttonVisible="true" cols="6" showTodayLink="true" id="endDatebox" onChange="@command('searchByDateRange')"/>
+                                    <button iconSclass="z-icon-eraser" tooltiptext="清除" onClick="@command('clearDateRange')"/>
+                                </hlayout>
+                            </bandpopup>
+                        </bandbox>
+                    </auxheader>
+                </auxhead>
+                <columns>
+                    <column label="词/句" sort="auto('english')"/>
+                    <column label="权重" width="10%" sort="auto('memoryLevel')"/>
+                    <column label="录入日期" width="15%" sort="auto('createTime')"/>
+                </columns>
+                <rows>
+                    <template name="model">
+                        <row>
+                            <label value="@load(each.english)" style="cursor:pointer" popup="translationPopup" onClick="@command('showTranslation', vocabulary=each)"/>
+                            <spinner value="@bind(each.memoryLevel)" onChange="@command('updateMemoryLevel', vocabulary=each)"/>
+                            <label value="@load(each.createTime)" />
+                        </row>
+                    </template>
+                </rows>
+            </grid>
+        </hbox>
+        <popup id="translationPopup" width="50em">
+            <hlayout valign="middle" >
+                <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
+                <space />
+                <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+            </hlayout>
+            <separator />
+            <grid model="@bind(vm.chineseTranslationVOList)">
+                <columns>
+                    <column width="5%"></column>
+                    <column></column>
+                </columns>
+                <rows>
+                    <template name="model">
+                        <row>
+                            <label value="@load(each.property)"/>
+                            <label hflex="1" value="@bind(each.text)" />
+                        </row>
+                    </template>
+                </rows>
+            </grid>
+            <grid model="@bind(vm.vocabulary.exampleSentences)" visible="@load(not empty vm.vocabulary.exampleSentences)"
+                  emptyMessage="没有例句">
+                <auxhead>
+                    <auxheader>例句</auxheader>
+                </auxhead>
+                <columns>
+                    <column />
+                </columns>
+                <rows>
+                    <template name="model">
+                        <row>
+                            <vlayout>
+                                <label hflex="1" value="@load(each.sentence)"/>
+                                <label hflex="1" value="@load(each.translation)"/>
+                            </vlayout>
+                        </row>
+                    </template>
+                </rows>
+            </grid>
+        </popup>
+    </window>
+</zk>

@@ -107,7 +107,16 @@ public class VocabularyService {
         int memoryLevel = null == vocabulary.getMemoryLevel() ? 0 : vocabulary.getMemoryLevel();
         memoryLevel++;
         vocabulary.setMemoryLevel(memoryLevel);
-        vocabularyDAO.update(vocabulary);
+        vocabularyDAO.updateMemoryLevelById(vocabulary);
+    }
+
+
+    /**
+     * 修改记忆等级
+     * @param vocabulary
+     */
+    public void updateMemoryLevel(Vocabulary vocabulary) {
+        vocabularyDAO.updateMemoryLevelById(vocabulary);
     }
 
     /**

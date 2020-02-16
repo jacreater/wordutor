@@ -21,8 +21,6 @@ import org.zkoss.zul.Bandbox;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Data
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
@@ -91,7 +89,7 @@ public class VocabularyVM {
             throw new WrongValueException("至少有一个中文翻译");
         }
         vocabularyService.save(vocabulary, chineseTranslationVOList, exampleSentenceList);
-        Notification.show("保存成功", true);
+        Notification.show("保存成功", null, null, null, 2000);
     }
 
     @Command

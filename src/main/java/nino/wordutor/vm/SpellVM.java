@@ -6,6 +6,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Textbox;
 
 import java.util.LinkedList;
@@ -17,6 +18,11 @@ public class SpellVM extends ReciteVM{
     @Wire
     private Textbox englishTextbox;
 
+    @Wire
+    private Button nextBtn;
+    @Wire
+    private Button forgetBtn;
+
     @AfterCompose
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
@@ -24,7 +30,6 @@ public class SpellVM extends ReciteVM{
         Selectors.wireVariables(view, this, null);
         init();
     }
-
 
 
     /**
@@ -36,14 +41,34 @@ public class SpellVM extends ReciteVM{
         if (english.trim().length() > 0) {
             if (!english.equals(vocabulary.getEnglish())) {
                 englishTextbox.setSclass("spell_input_incorrect spell_input_size");
+                forgetBtn.setFocus(true);
             }
             else {
                 englishTextbox.setSclass("spell_input_correct spell_input_size");
+                nextBtn.setFocus(true);
             }
         }
         else {
             englishTextbox.setSclass("spell_input spell_input_size");
         }
+    }
+
+    @Override
+    public void next(){
+        super.next();
+        resetSclass();
+    }
+
+    @Override
+    public void forget() {
+        super.forget();
+        resetSclass();
+    }
+
+    private void resetSclass() {
+        englishTextbox.setValue(null);
+        englishTextbox.setSclass("spell_input spell_input_size");
+        englishTextbox.setFocus(true);
     }
 
 }
