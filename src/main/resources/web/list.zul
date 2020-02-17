@@ -26,7 +26,7 @@
                     </auxheader>
                 </auxhead>
                 <columns>
-                    <column label="词/句" sort="auto('english')"/>
+                    <column label="词/句" sort="auto('englishLowerCase')"/>
                     <column label="权重" width="10%" sort="auto('memoryLevel')"/>
                     <column label="录入日期" width="15%" sort="auto('createTime')"/>
                 </columns>
