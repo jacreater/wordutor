@@ -28,5 +28,12 @@ public class Vocabulary {
 
 	private List<ExampleSentence> exampleSentences;
 
+	/**
+	 * 用于排序时，忽略大小写
+	 * @return
+	 */
+	public String getEnglishLowerCase() {
+		return english.toLowerCase();
+	}
 
 }
