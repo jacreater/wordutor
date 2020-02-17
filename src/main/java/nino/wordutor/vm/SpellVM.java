@@ -59,12 +59,6 @@ public class SpellVM extends ReciteVM{
         resetSclass();
     }
 
-    @Override
-    public void forget() {
-        super.forget();
-        resetSclass();
-    }
-
     private void resetSclass() {
         englishTextbox.setValue(null);
         englishTextbox.setSclass("spell_input spell_input_size");
