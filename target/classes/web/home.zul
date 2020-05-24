@@ -1,0 +1,8 @@
+<zk>
+    <window title="Welcome to wordutor" border="normal" >
+        <button label="单词录入" href="/input"/>
+        <space />
+        <button label="背单词" href="/test"/>
+    </window>
+
+</zk>

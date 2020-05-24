@@ -1,0 +1,108 @@
+<zk>
+    <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+
+    <window style=" padding:0px" width="100%" onClientInfo="@command('initClient', event=event)"
+             apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('nino.wordutor.vm.ExerciseVM')">
+
+        <style>
+            .spell_input {
+            border:none;
+            border-bottom: 1px solid #000;
+            background-color: transparent;
+            }
+            .spell_input_incorrect {
+            border:none;
+            border-bottom: 3px solid red;
+            background-color: #FFD2D2;
+            }
+            .spell_input_correct {
+            border:none;
+            border-bottom: 3px solid #66ff33;
+            background-color: #DFF2BF;
+            }
+            .spell_input_size {
+            font-size: @load(vm.fontSize);
+            height: 2em;
+            border-radius:0px;
+            }
+
+        </style>
+
+        <caption style="text-align: right;margin-top:10px;margin-right:15px" label="WORDUTOR(拼)"/>
+        <hbox hflex="1" spacing="0">
+            <include src="~./nav.zul" />
+            <vbox hflex="1">
+                <tabbox mold="accordion" hflex="1" id="vocabularyTabbox">
+                    <tabs>
+                        <tab>句</tab>
+                        <tab onClick="@command('prepareTranslation', vocabulary=vm.vocabulary)">查看翻译</tab>
+                    </tabs>
+                    <tabpanels>
+                        <tabpanel height="350px">
+                            <div hflex="1">
+                                <include src="~./utilmenubar.zul" />
+                                <vlayout hflex="1" id="sentenceVlayout" use="nino.wordutor.vm.ExampleSentenceExerciseVlayout">
+                                    <label value="@load(c:length(vm.exampleSentenceList))"/>
+                                    <!--<label style="font-size: 4rem" value="@load(vm.exampleSentence.sentence)" />
+                                    <label style="font-size: 3em; color: grey" value="@load(vm.exampleSentence.translation)"/>-->
+                                    <div id="sentenceDiv"  ></div>
+                                    <label id="translationLabel" />
+                                </vlayout>
+                            </div>
+                        </tabpanel>
+
+                        <tabpanel>
+                            <hlayout valign="middle" >
+                                <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
+                                <space />
+                                <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+                            </hlayout>
+                            <separator />
+                            <grid model="@bind(vm.chineseTranslationVOList)">
+                                <columns>
+                                    <column width="5%"></column>
+                                    <column></column>
+                                </columns>
+                                <rows>
+                                    <template name="model">
+                                        <row>
+                                            <label value="@load(each.property)"/>
+                                            <label hflex="1" value="@bind(each.text)" />
+                                        </row>
+                                    </template>
+                                </rows>
+                            </grid>
+                            <grid model="@bind(vm.vocabulary.exampleSentences)" visible="@load(not empty vm.vocabulary.exampleSentences)"
+                                  emptyMessage="没有例句">
+                                <auxhead>
+                                    <auxheader>例句</auxheader>
+                                </auxhead>
+                                <columns>
+                                    <column />
+                                </columns>
+                                <rows>
+                                    <template name="model">
+                                        <row>
+                                            <vlayout>
+                                                <label hflex="1" value="@load(each.sentence)"/>
+                                                <label hflex="1" value="@load(each.translation)"/>
+                                            </vlayout>
+                                        </row>
+                                    </template>
+                                </rows>
+                            </grid>
+                        </tabpanel>
+                    </tabpanels>
+                </tabbox>
+
+
+                <hlayout style="margin-top:1em">
+                    <button label="记得" hflex="1" onClick="@command('know')"/>
+                    <button label="不记得" hflex="1" onClick="@command('forget')"/>
+                </hlayout>
+            </vbox>
+        </hbox>
+    </window>
+
+</zk>
