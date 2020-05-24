@@ -17,7 +17,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Component
-public class VocabularyDAO {
+public class  VocabularyDAO {
 
     @Resource
     private MongoTemplate mongoTemplate;

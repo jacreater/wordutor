@@ -54,7 +54,6 @@
 
                         <tabpanel>
                             <hlayout valign="middle" >
-
                                 <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
                                 <space />
                                 <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>

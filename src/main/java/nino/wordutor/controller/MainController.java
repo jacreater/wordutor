@@ -28,6 +28,15 @@ public class MainController {
     }
 
     /**
+     * 造句练习
+     * @return
+     */
+    @GetMapping("/exercise")
+    public String exercise() {
+        return "exercise";
+    }
+
+    /**
      *  拼写单词
      * @return
      */

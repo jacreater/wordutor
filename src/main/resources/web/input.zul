@@ -1,5 +1,5 @@
 <zk>
-    <window style=" padding:0px" width="100%" apply="org.zkoss.bind.BindComposer"
+    <window style="padding:0px" width="100%" apply="org.zkoss.bind.BindComposer"
             viewModel="@id('vm') @init('nino.wordutor.vm.VocabularyVM')">
         <caption style="text-align: right;margin-top:10px;width:100%" label="WORDUTOR(录)">
             <bandbox id="englishSearchBandbox" buttonVisible="true" width="50%" style="margin-left:1em; margin-right:1em;"
@@ -39,9 +39,21 @@
                         <div style="float:right" visible="@load(not empty vm.vocabulary.createTime)">
                             创建时间: <label style="font-style:italic; color: grey" value="@load(vm.vocabulary.createTime)"/>
                         </div>
+
                     </div>
-
-
+                    <groupbox open="false" id="advanceGroupbox" style="border:none" title="更多">
+                        <vlayout>
+                            <div>
+                                复数: <textbox value="@bind(vm.vocabulary.plural)"/>
+                                第三人称单数: <textbox value="@bind(vm.vocabulary.thirdSingular)"/>
+                            </div>
+                            <div>
+                                过去式: <textbox value="@bind(vm.vocabulary.pastTense)"/>
+                                过去分词: <textbox value="@bind(vm.vocabulary.pastParticiple)"/>
+                                现在分词: <textbox value="@bind(vm.vocabulary.presentParticiple)"/>
+                            </div>
+                        </vlayout>
+                    </groupbox>
 
                     <tabbox style="margin-top:1em; border:none">
                         <toolbar>
