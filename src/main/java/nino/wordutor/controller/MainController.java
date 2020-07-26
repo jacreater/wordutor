@@ -54,5 +54,9 @@ public class MainController {
         return "list";
     }
 
+    @GetMapping("/calendar")
+    public String calendar() {
+        return "calendar";
+    }
 
 }
