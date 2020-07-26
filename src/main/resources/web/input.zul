@@ -78,7 +78,7 @@
                                                     <listitem label="n" value="n"/>
                                                     <listitem label="adj" value="adj"/>
                                                     <listitem label="adv" value="adv"/>
-                                                    <listitem label="v" value="v"/>
+                                                    <listitem label="vi&amp;vt" value="vi&amp;vt"/>
                                                     <listitem label="vi" value="vi"/>
                                                     <listitem label="vt" value="vt"/>
                                                     <listitem label="prop" value="prop"/>

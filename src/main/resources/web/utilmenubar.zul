@@ -6,6 +6,8 @@
         <menuitem iconSclass="z-icon-minus" style="font-size: 20px;float:right"/>-->
         <menu iconSclass="z-icon-cog" style="font-size: 20px;float:right">
             <menupopup>
+
+                <menuseparator />
                 <menuitem checkmark="true" autocheck="true" label="选择最后录入的" value="TIME"
                           checked="@load(vm.candidateType eq self.value)" onCheck="@command('selectCandidateType', type=self.value)"/>
                 <menuitem checkmark="true" autocheck="true" label="选择记忆等级高的" value="LEVEL"
@@ -23,7 +25,18 @@
                           onCheck="@command('selectCandidateLines', lines=self.label)"/>
                 <menuitem checkmark="true" autocheck="true" label="全部" checked="@load(vm.lines eq self.value)"
                           onCheck="@command('selectCandidateLines', lines=99999)"/>
+                <menuseparator />
+                <menuitem label="乱序" checkmark="true" autocheck="true" checked="@bind(vm.messy)" onClick="@command('mess')" />
             </menupopup>
         </menu>
+        <menuitem label="@load(vm.dateRange)" popup="dateRangePopup" style="font-size: 20px;float:right"/>
     </menubar>
+    <popup id="dateRangePopup">
+        <hlayout valign="baseline">
+            <calendar value="@bind(vm.startDate)" onChange="@command('updateConstraint')"/>
+            <calendar constraint="@load(vm.endDateConstraint)" value="@bind(vm.endDate)" onChange="@command('updateDateRange')"/>
+            <button label="ok" type="submit" onClick="@command('selectCandidateDateRange')"/>
+            <button label="reset" type="reset" onClick="@command('reset')"/>
+        </hlayout>
+    </popup>
 </zk>

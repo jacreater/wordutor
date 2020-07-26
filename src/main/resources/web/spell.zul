@@ -1,31 +1,36 @@
 <zk>
     <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
-    <style>
-        .spell_input {
-        border:none;
-        border-bottom: 1px solid #000;
-        background-color: transparent;
-        }
-        .spell_input_incorrect {
-        border:none;
-        border-bottom: 3px solid red;
-        background-color: #FFD2D2;
-        }
-        .spell_input_correct {
-        border:none;
-        border-bottom: 3px solid #66ff33;
-        background-color: #DFF2BF;
-        }
-        .spell_input_size {
-        font-size: 2em;
-        width: 12em;
-        height: 2em;
-        border-radius:0px;
-        }
-
-    </style>
-    <window style=" padding:0px" width="100%"
+    <window style=" padding:0px" width="100%" onClientInfo="@command('initClient', event=event)"
              apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('nino.wordutor.vm.SpellVM')">
+        <style>
+            .spell_input {
+            border:none;
+            border-bottom: 1px solid #000;
+            background-color: transparent;
+            }
+            .spell_input_incorrect {
+            border:none;
+            border-bottom: 3px solid red;
+            background-color: #FFD2D2;
+            }
+            .spell_input_correct {
+            border:none;
+            border-bottom: 3px solid #66ff33;
+            background-color: #DFF2BF;
+            }
+            .spell_input_size {
+            font-size: 2em;
+            width: 12em;
+            height: 2em;
+            border-radius:0px;
+            }
+            .large_screen {
+            font-size: 2em;
+            }
+            .small_screen {
+            font-size: 1em;
+            }
+        </style>
         <caption style="text-align: right;margin-top:10px;margin-right:15px" label="WORDUTOR(拼)"/>
         <hbox hflex="1" spacing="0">
             <include src="~./nav.zul" />
@@ -36,7 +41,7 @@
                         <tab onClick="@command('prepareTranslation', vocabulary=vm.vocabulary)">查看翻译</tab>
                     </tabs>
                     <tabpanels>
-                        <tabpanel height="350px">
+                        <tabpanel height="60%">
                             <listbox visible="false" model="@load(vm.candidateList)">
                                 <auxhead>
                                     <auxheader>
@@ -50,13 +55,14 @@
                                 </template>
                             </listbox>
                             <div hflex="1">
-                                <include src="~./utilmenubar.zul" />
+                                <include id="menubarInclude" src="~./utilmenubar.zul" />
 
                                 <vlayout>
                                     <label value="@load(c:length(vm.candidateList))" />
-                                    <label style="font-size: 3em; color: grey" value="@load(vm.vocabulary.phonetic)"
-                                           visible="@load(not empty vm.vocabulary.phonetic)"/>
-                                    <label style="font-size: 2em; " value="@load(vm.vocabulary.chineseTranslation[0].text)"/>
+                                    <label id="phoneticLabel" style="@load(c:cat('color: grey; font-size: ', vm.fontSize))" value="@load(vm.vocabulary.phonetic)"
+                                           visible="@load(not empty vm.vocabulary.phonetic)">
+                                    </label>
+                                    <label id="chineseTranslationLabel" style="@load(c:cat('font-size: ', vm.fontSize))" value="@load(vm.vocabulary.chineseTranslation[0].text)"/>
                                     <hlayout valign="middle">
                                         <textbox id="englishTextbox" errorboxSclass="spell_input_incorrect" sclass="spell_input spell_input_size"
                                                  onOK="@command('check', english=self.value)"/>
@@ -69,10 +75,15 @@
 
                         <tabpanel>
                             <hlayout valign="middle" >
-
-                                <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
-                                <space />
-                                <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+                                <div hflex="1">
+                                    <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
+                                    <space />
+                                    <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+                                </div>
+                                <div hflex="1" style="text-align:right">
+                                    录入时间：
+                                    <label value="@load(vm.vocabulary.createTime)"/>
+                                </div>
                             </hlayout>
                             <separator />
                             <grid model="@bind(vm.chineseTranslationVOList)">

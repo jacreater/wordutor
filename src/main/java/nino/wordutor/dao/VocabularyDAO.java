@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -67,16 +68,30 @@ public class  VocabularyDAO {
     }
 
     public List<Vocabulary> findAllSortByCreateTime(int limit) {
+        return findAllSortByCreateTime(limit, null, null);
+    }
+
+    public List<Vocabulary> findAllSortByCreateTime(int limit, Date start, Date end) {
         Query query = new Query();
         query.with(Sort.by(Sort.Order.desc("createTime")));
         query.limit(limit);
+        if (null != start && null != end) {
+            Criteria criteria = new Criteria();
+            criteria.andOperator(Criteria.where("createTime").gt(start).lt(end));
+            query.addCriteria(criteria);
+        }
         return mongoTemplate.find(query, Vocabulary.class);
     }
 
-    public List<Vocabulary> findAllSortByMemoryLevel(int limit) {
+    public List<Vocabulary> findAllSortByMemoryLevel(int limit, Date start, Date end) {
         Query query = new Query();
         query.with(Sort.by(Sort.Order.desc("memoryLevel")));
         query.limit(limit);
+        if (null != start && null != end) {
+            Criteria criteria = new Criteria();
+            criteria.andOperator(Criteria.where("createTime").gt(start).lt(end));
+            query.addCriteria(criteria);
+        }
         return mongoTemplate.find(query, Vocabulary.class);
     }
 

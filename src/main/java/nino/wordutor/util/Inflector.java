@@ -18,6 +18,7 @@ public class Inflector {
     private static List<RuleAndReplacement> plurals = new ArrayList<RuleAndReplacement>();
     private static List<RuleAndReplacement> singulars = new ArrayList<RuleAndReplacement>();
     private static List<RuleAndReplacement> pastTenses = new ArrayList<RuleAndReplacement>();
+    private static List<RuleAndReplacement> presents = new ArrayList<RuleAndReplacement>();
     private static List<String> uncountables = new ArrayList<String>();
 
     private static Inflector instance; // (Pseudo-)Singleton instance.
@@ -52,6 +53,11 @@ public class Inflector {
         pastTense("$", "ed");
         pastTense("e$", "ed");
         pastTense("([^aeiouy]|qu)y$", "$1ied");
+
+        present("$", "ing");
+        present("e$", "ing");
+        present("ie$", "ying");
+        present("c$", "cking");
 
         singular("s$", "");
         singular("(n)ews$", "$1ews");
@@ -112,9 +118,6 @@ public class Inflector {
     }
 
     public String pastTenslize(String word) {
-        if (uncountables.contains(word.toLowerCase())) {
-            return word;
-        }
         return replaceWithFirstRule(word, pastTenses);
     }
 
@@ -123,6 +126,13 @@ public class Inflector {
             return word;
         }
         return replaceWithFirstRule(word, singulars);
+    }
+
+    public String present(String word) {
+        if (uncountables.contains(word.toLowerCase())) {
+            return word;
+        }
+        return replaceWithFirstRule(word, presents);
     }
 
     private String replaceWithFirstRule(String word, List<RuleAndReplacement> ruleAndReplacements) {
@@ -149,6 +159,10 @@ public class Inflector {
         // Strip away package name - we only want the 'base' class name.
         String className = klass.getName().replace(klass.getPackage().getName()+".", "");
         return tableize(className);
+    }
+
+    public static void present(String rule, String replacement) {
+        presents.add(0, new RuleAndReplacement(rule, replacement));
     }
 
     public static void pastTense(String rule, String replacement) {

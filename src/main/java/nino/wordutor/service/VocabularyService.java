@@ -33,12 +33,16 @@ public class VocabularyService {
         //过滤掉翻译为空
         for (ChineseTranslationVO vo : chineseTranslationVOList) {
             if (null != vo.getText() && vo.getText().trim().length() > 0) {
-                ChineseTranslation chineseTranslation = new ChineseTranslation();
-                chineseTranslation.setProperty(vo.getProperty());
-                chineseTranslation.setText(vo.getText().replaceAll(";", ",")
-                        .replaceAll("，", ",")
-                        .replaceAll("；", ",").split(","));
-                chineseTranslations.add(chineseTranslation);
+                //词性可能有多个。多个之间用&分割
+                String properties[] = vo.getProperty().split("&");
+                for (String property : properties) {
+                    ChineseTranslation chineseTranslation = new ChineseTranslation();
+                    chineseTranslation.setProperty(property);
+                    chineseTranslation.setText(vo.getText().replaceAll(";", ",")
+                            .replaceAll("，", ",")
+                            .replaceAll("；", ",").split(","));
+                    chineseTranslations.add(chineseTranslation);
+                }
             }
         }
         if (chineseTranslations.size() > 0) {
@@ -96,7 +100,7 @@ public class VocabularyService {
     }
 
     public List<Vocabulary> findAllSortByMemoryLevel(int lines) {
-        return vocabularyDAO.findAllSortByMemoryLevel(lines);
+        return vocabularyDAO.findAllSortByMemoryLevel(lines, null, null);
     }
 
     /**
@@ -126,11 +130,16 @@ public class VocabularyService {
      * @return
      */
     public List<Vocabulary> getCandidateList(String type, int limit) {
+        return getCandidateList(type, limit, null, null);
+    }
+
+    public List<Vocabulary> getCandidateList(String type, int limit, Date start, Date end) {
         if (TYPE_LEVEL.equalsIgnoreCase(type)) {
-            return vocabularyDAO.findAllSortByMemoryLevel(limit);
+            return vocabularyDAO.findAllSortByMemoryLevel(limit, start, end);
         } else if (TYPE_TIME.equalsIgnoreCase(type)) {
-            return vocabularyDAO.findAllSortByCreateTime(limit);
+            return vocabularyDAO.findAllSortByCreateTime(limit, start, end);
         }
         return null;
     }
+
 }

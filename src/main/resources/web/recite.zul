@@ -16,9 +16,9 @@
         border-radius: 10px;
         }
     </style>
-    <window  style=" padding:0px" width="100%"
+    <window style=" padding:0px" width="100%" onClientInfo="@command('initClient', event=event)"
              apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('nino.wordutor.vm.ReciteVM')">
-        <caption style="text-align: right;margin-top:10px; margin-right:15px" label="WORDUTOR(背)"/>
+        <caption style="text-align: right;margin-top:10px; margin-right:15px" label="WORDUTOR(背)" />
         <hbox hflex="1" spacing="0">
             <include src="~./nav.zul" />
 
@@ -29,7 +29,7 @@
                         <tab onClick="@command('prepareTranslation', vocabulary=vm.vocabulary)">查看翻译</tab>
                     </tabs>
                     <tabpanels>
-                        <tabpanel height="350px">
+                        <tabpanel height="60%">
                             <listbox visible="false" model="@load(vm.candidateList)">
                                 <auxhead>
                                     <auxheader>
@@ -43,20 +43,26 @@
                                 </template>
                             </listbox>
                             <div hflex="1">
-                                <include src="~./utilmenubar.zul" />
+                                <include id="menubarInclude" src="~./utilmenubar.zul" />
                                 <vlayout hflex="1">
                                     <label value="@load(c:length(vm.candidateList))" />
-                                    <label style="font-size: 4em" value="@load(vm.vocabulary.english)" />
-                                    <label style="font-size: 3em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+                                    <label style="@load(c:cat('font-size: ', vm.fontSize))" value="@load(vm.vocabulary.english)" />
+                                    <label style="@load(c:cat('color: grey; font-size: ', vm.fontSize))" value="@load(vm.vocabulary.phonetic)"/>
                                 </vlayout>
                             </div>
                         </tabpanel>
 
                         <tabpanel>
                             <hlayout valign="middle" >
-                                <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
-                                <space />
-                                <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+                                <div hflex="1">
+                                    <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
+                                    <space />
+                                    <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+                                </div>
+                                <div hflex="1" style="text-align:right">
+                                    录入时间：
+                                    <label value="@load(vm.vocabulary.createTime)"/>
+                                </div>
                             </hlayout>
                             <separator />
                             <grid model="@bind(vm.chineseTranslationVOList)">

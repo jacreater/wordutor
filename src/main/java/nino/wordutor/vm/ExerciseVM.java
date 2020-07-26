@@ -21,7 +21,7 @@ import java.util.*;
 
 @Data
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
-public class ExerciseVM {
+public class ExerciseVM extends ReciteVM {
 
     @WireVariable
     VocabularyService vocabularyService;
@@ -48,6 +48,8 @@ public class ExerciseVM {
     Vocabulary vocabulary;
 
     private String fontSize = "16px";
+
+    Boolean messy = false;
 
     //默认显示30个候选词
     int lines = 30;
@@ -78,24 +80,43 @@ public class ExerciseVM {
             if (component instanceof Label) {
                 ((Label) component).setStyle("margin-right:0.5rem; font-size:" + fontSize);
             }
+            else if (component instanceof Textbox) {
+                ((Textbox) component).setStyle("margin-right:0.5rem; font-size:" + fontSize);
+            }
         }
     }
 
-    private void init() {
-        candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines));
+    public void init() {
+        if (DateRangeSelectorVM.DEFAULT_DATE_RANGE_LABEL.equals(dateRange)) {
+            candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines));
+        }
+        else {
+            candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines, getStartDate(), getEndDate()));
+        }
+        if (messy) {
+            Set<Vocabulary> set = new HashSet(candidateList);
+            candidateList = new LinkedList<>(set);
+        }
+
         vocabularyList = new LinkedList<>();
         exampleSentenceList = new LinkedList<>();
         List<ExampleSentence> exampleSentences = new ArrayList<>();
+        List<Vocabulary> vocabularies = new ArrayList<>();
         for (Vocabulary vocabulary : candidateList) {
             if (null != vocabulary.getExampleSentences()) {
                 for (ExampleSentence exampleSentence : vocabulary.getExampleSentences()) {
                     exampleSentences.add(exampleSentence);
-                    vocabularyList.add(vocabulary);
+                    vocabularies.add(vocabulary);
                 }
             }
         }
-        exampleSentenceList.addAll(exampleSentences.subList(0, lines));
-        next();
+        if (null != exampleSentences && exampleSentences.size() > 0) {
+            //根据lines从数据库中取出的生词，根据这些生词创建的练习数可能小于lines
+            lines = lines > exampleSentences.size() ? exampleSentences.size() : lines;
+            exampleSentenceList.addAll(exampleSentences.subList(0, lines));
+            vocabularyList.addAll(vocabularies.subList(0, lines));
+            next();
+        }
     }
 
 
@@ -136,6 +157,7 @@ public class ExerciseVM {
         englishTextbox.setValue(null);
         englishTextbox.setSclass("spell_input spell_input_size");
         englishTextbox.setFocus(true);
+
     }
 
     @Command
@@ -176,4 +198,14 @@ public class ExerciseVM {
         this.lines = lines;
         init();
     }
+
+    /**
+     * 增加记忆等级
+     */
+    @Command
+    @NotifyChange(value = {"vocabulary"})
+    public void plusMemoryLevel(){
+        vocabularyService.plusMemoryLevel(vocabulary);
+    }
+
 }

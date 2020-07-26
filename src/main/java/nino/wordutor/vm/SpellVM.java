@@ -3,10 +3,13 @@ package nino.wordutor.vm;
 import lombok.Data;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.ClientInfoEvent;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 
 import java.util.LinkedList;
@@ -17,11 +20,16 @@ public class SpellVM extends ReciteVM{
 
     @Wire
     private Textbox englishTextbox;
+    @Wire
+    private Label phoneticLabel;
+    @Wire
+    private Label chineseTranslationLabel;
 
     @Wire
     private Button nextBtn;
     @Wire
     private Button forgetBtn;
+
 
     @AfterCompose
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
@@ -30,7 +38,6 @@ public class SpellVM extends ReciteVM{
         Selectors.wireVariables(view, this, null);
         init();
     }
-
 
     /**
      * 校验单词拼写是否正确

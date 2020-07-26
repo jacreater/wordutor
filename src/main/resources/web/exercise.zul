@@ -39,9 +39,9 @@
                         <tab onClick="@command('prepareTranslation', vocabulary=vm.vocabulary)">查看翻译</tab>
                     </tabs>
                     <tabpanels>
-                        <tabpanel height="350px">
+                        <tabpanel height="60%">
                             <div hflex="1">
-                                <include src="~./utilmenubar.zul" />
+                                <include id="menubarInclude" src="~./utilmenubar.zul" />
                                 <vlayout hflex="1" id="sentenceVlayout" use="nino.wordutor.vm.ExampleSentenceExerciseVlayout">
                                     <label value="@load(c:length(vm.exampleSentenceList))"/>
                                     <!--<label style="font-size: 4rem" value="@load(vm.exampleSentence.sentence)" />
@@ -54,9 +54,15 @@
 
                         <tabpanel>
                             <hlayout valign="middle" >
-                                <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
-                                <space />
-                                <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+                                <div hflex="1">
+                                    <label style="font-size: 2em" value="@load(vm.vocabulary.english)" />
+                                    <space />
+                                    <label style="font-size: 1.5em; color: grey" value="@load(vm.vocabulary.phonetic)"/>
+                                </div>
+                                <div hflex="1" style="text-align:right">
+                                    录入时间：
+                                    <label value="@load(vm.vocabulary.createTime)"/>
+                                </div>
                             </hlayout>
                             <separator />
                             <grid model="@bind(vm.chineseTranslationVOList)">

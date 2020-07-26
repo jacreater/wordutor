@@ -10,7 +10,7 @@
     </parent>
     <groupId>nino</groupId>
     <artifactId>wordutor</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.1</version>
     <name>wordutor</name>
     <description>Demo project for Spring Boot</description>
 
@@ -51,11 +51,38 @@
             <artifactId>zuti</artifactId>
             <version>8.6.0.1-Eval</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.zkoss.zkspringboot</groupId>
             <artifactId>zkspringboot-starter</artifactId>
             <type>pom</type>
             <version>1.0.4</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.zkoss.zkspringboot</groupId>
+            <artifactId>zkspringboot-autoconfig</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.zkoss.zk</groupId>
+            <artifactId>zkbind</artifactId>
+            <version>9.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
         <dependency>
             <groupId>org.zkoss.zk</groupId>

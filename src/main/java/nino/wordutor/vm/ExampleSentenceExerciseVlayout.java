@@ -23,7 +23,10 @@ public class ExampleSentenceExerciseVlayout extends Vlayout {
         Label translationLabel = (Label) getFellow("translationLabel");
         sentenceDiv.getChildren().clear();
         String sentence = exampleSentence.getSentence();
-
+        sentence = sentence.replaceAll("\\.", " ")
+                .replaceAll(",", " ")
+                .replaceAll("\\?", " ")
+                .replaceAll("!", " ");
         if (vocabulary.getEnglish().trim().split(" ").length == 1) {
             String origin = vocabulary.getEnglish();
             String plural = StringUtils.isBlank(vocabulary.getPlural()) ? Inflector.getInstance().pluralize(origin)
@@ -36,9 +39,9 @@ public class ExampleSentenceExerciseVlayout extends Vlayout {
                     : vocabulary.getPastTense();
             String pastParticiple = StringUtils.isBlank(vocabulary.getPastParticiple()) ? Inflector.getInstance().pastTenslize(origin)
                     : vocabulary.getPastParticiple();
-            String presentParticiple = StringUtils.isBlank(vocabulary.getPresentParticiple()) ? Inflector.getInstance().pastTenslize(origin)
+            String presentParticiple = StringUtils.isBlank(vocabulary.getPresentParticiple()) ? Inflector.getInstance().present(origin)
                     : vocabulary.getPresentParticiple();
-            String thirdSingular = StringUtils.isBlank(vocabulary.getPresentParticiple()) ? Inflector.getInstance().pastTenslize(origin)
+            String thirdSingular = StringUtils.isBlank(vocabulary.getThirdSingular()) ? Inflector.getInstance().singularize(origin)
                     : vocabulary.getThirdSingular();
 
             String[] words = sentence.split(" ");

@@ -7,21 +7,24 @@ import nino.wordutor.service.VocabularyService;
 import nino.wordutor.util.ChineseTranslationConverter;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.ClientInfoEvent;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Notification;
+import org.zkoss.zul.Popup;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Data
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
-public class ReciteVM {
+public class ReciteVM extends DateRangeSelectorVM{
 
     @WireVariable
     VocabularyService vocabularyService;
@@ -37,11 +40,17 @@ public class ReciteVM {
     //候选词默认选取方式是根据创建时间
     String candidateType = "TIME";
 
+    private String fontSize;
+
     @Wire
     Tabbox vocabularyTabbox;
 
+    private Boolean messy = false;
+
+
     @AfterCompose
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
+
         Selectors.wireComponents(view, this, false);
         Selectors.wireEventListeners(view, this);
         Selectors.wireVariables(view, this, null);
@@ -50,9 +59,33 @@ public class ReciteVM {
 
 
     public void init(){
-        candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines));
+        if (DateRangeSelectorVM.DEFAULT_DATE_RANGE_LABEL.equals(dateRange)) {
+            candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines));
+        }
+        else {
+            candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines, getStartDate(), getEndDate()));
+        }
+
+        if (messy) {
+            Set<Vocabulary> set = new HashSet(candidateList);
+            candidateList = new LinkedList<>(set);
+        }
         next();
     }
+
+
+
+    @Command
+    @NotifyChange("fontSize")
+    public void initClient(@BindingParam("event") Event event) {
+        ClientInfoEvent oe = (ClientInfoEvent) event;
+        if (oe.getDesktopWidth() > 800) {
+            fontSize = "2.5rem";
+        } else {
+            fontSize = "1.5rem";
+        }
+    }
+
 
     /**
      * 显示下一个单词
@@ -126,4 +159,20 @@ public class ReciteVM {
         this.lines = lines;
         init();
     }
+
+    @Command
+    @NotifyChange(value = {"candidateList", "candidateType", "vocabulary"})
+    public void selectCandidateDateRange() {
+        init();
+        dateRangePopup.close();
+    }
+
+    /**
+     * 打乱当前候选词
+     */
+    @Command
+    public void mess() {
+        init();
+    }
+
 }
