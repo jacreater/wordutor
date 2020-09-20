@@ -67,8 +67,7 @@ public class ReciteVM extends DateRangeSelectorVM{
         }
 
         if (messy) {
-            Set<Vocabulary> set = new HashSet(candidateList);
-            candidateList = new LinkedList<>(set);
+            Collections.shuffle(candidateList);
         }
         next();
     }
@@ -171,6 +170,7 @@ public class ReciteVM extends DateRangeSelectorVM{
      * 打乱当前候选词
      */
     @Command
+    @NotifyChange("vocabulary")
     public void mess() {
         init();
     }

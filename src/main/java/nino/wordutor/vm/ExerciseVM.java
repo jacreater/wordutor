@@ -94,8 +94,7 @@ public class ExerciseVM extends ReciteVM {
             candidateList = new LinkedList<>(vocabularyService.getCandidateList(candidateType, lines, getStartDate(), getEndDate()));
         }
         if (messy) {
-            Set<Vocabulary> set = new HashSet(candidateList);
-            candidateList = new LinkedList<>(set);
+            Collections.shuffle(candidateList);
         }
 
         vocabularyList = new LinkedList<>();
